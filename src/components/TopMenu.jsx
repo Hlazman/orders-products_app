@@ -11,7 +11,7 @@ const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric
 const formatter = new Intl.DateTimeFormat('en-US', options);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io("http://localhost:3001")
     socket.on('activeSessions', setActiveSessions);
     return () => {
       socket.disconnect();
