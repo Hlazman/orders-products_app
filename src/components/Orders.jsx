@@ -1,21 +1,28 @@
-import { useState } from 'react';
 import OrderRemove from './OrderRemove';
 import { Container, Table } from 'react-bootstrap';
-import { orders as orderData, products } from '../data';
 import OrderDetails from './OrderDetails';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 
 const Orders = () => {
-  const [currentOrders, setCurrentOrders] = useState(orderData);
+  const orders = useSelector(state => state.orders.orders);
+  const products = useSelector(state => state.orders.products);
+
 
   const getOrderProducts = (order) => {
     return products.filter(product => product.order === order.id);
-  }
+  };
 
   const getTotalPrice = (orderProducts) => {
     const totalUSD = orderProducts.reduce((acc, curr) => acc + curr.price.find(p => p.symbol === 'USD').value, 0);
     const totalUAH = orderProducts.reduce((acc, curr) => acc + curr.price.find(p => p.symbol === 'UAH').value, 0);
     return {totalUSD, totalUAH};
-  }
+  };
+
+  useEffect(() => {
+    console.log(orders)
+  }, [orders, products])
 
   return (
     <Container>
@@ -32,7 +39,7 @@ const Orders = () => {
           </tr>
         </thead>
         <tbody>
-          {currentOrders.map(order => (
+          {orders.map(order => (
             <tr key={order.id}>
               <td>{order.title}</td>
               <td>{getOrderProducts(order).length}</td>
@@ -51,8 +58,6 @@ const Orders = () => {
                 {<OrderRemove 
                   key={order.id} 
                   order={order} 
-                  currentOrders={currentOrders} 
-                  setCurrentOrders={setCurrentOrders}
                 />}
                 </td>
             </tr>
@@ -65,3 +70,4 @@ const Orders = () => {
 };
 
 export default Orders;
+

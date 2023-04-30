@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { addOrder, addProduct } from '../features/ordersSlice';
 
-const CreateOrder = ({ currentOrders, setCurrentOrders, currentProducts }) => {
+const CreateOrder = ({ currentOrders, currentProducts }) => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [description, setDescription] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleReset = (event) => {
-    event.preventDefault();
+  const handleReset = () => {
     setTitle('');
     setDate('');
     setDescription('');
@@ -20,14 +22,23 @@ const CreateOrder = ({ currentOrders, setCurrentOrders, currentProducts }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isFormValid()) {
+      const filteredProduct = currentProducts.filter(product => product.title === selectedProduct);
+      const updatedProduct = {
+          ...filteredProduct[0],
+          id: currentProducts.length + 1,
+          order: currentOrders.length + 1
+        };
+        
+      dispatch(addProduct(updatedProduct));
+      
       const newOrder = {
         id: currentOrders.length + 1,
         title,
-        date,
+        date: date.toLocaleString().replace(/T/, ' '),
         description,
-        products: currentProducts.filter(product => product.title === selectedProduct)
+        products: updatedProduct,
       };
-      setCurrentOrders([...currentOrders, newOrder]);
+      dispatch(addOrder(newOrder));
       handleReset()
       setShowAlert(false);
       setShowSuccessAlert(true);
@@ -61,7 +72,7 @@ const CreateOrder = ({ currentOrders, setCurrentOrders, currentProducts }) => {
 
       <Form.Group controlId="formDate" className='mb-3'>
         <Form.Label>Date</Form.Label>
-        <Form.Control type="date" value={date} onChange={(e) => setDate(e.target.value)} className={date.trim() === '' && showAlert ? 'is-invalid' : ''} />
+        <Form.Control type="datetime-local" value={date} onChange={(e) => setDate(e.target.value)} className={date.trim() === '' && showAlert ? 'is-invalid' : ''} />
         {date.trim() === '' && showAlert && <div className="invalid-feedback">Please select a date.</div>}
       </Form.Group>
 
@@ -76,7 +87,7 @@ const CreateOrder = ({ currentOrders, setCurrentOrders, currentProducts }) => {
         <Form.Control as="select" value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)} className={selectedProduct.trim() === '' && showAlert ? 'is-invalid' : ''}>
           <option value="">Select a product</option>
           {currentProducts.map(product => (
-            <option key={product.id} value={product.title}>{product.title}</option>
+            <option key={product.id} value={product.title}>{product.title} (Order: {product.order}) </option>
           ))}
         </Form.Control>
         {selectedProduct.trim() === '' && showAlert && <div className="invalid-feedback">Please select a product.</div>}

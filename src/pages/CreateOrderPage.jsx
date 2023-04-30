@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { orders, products } from "../data";
 import CreateOrder from "../components/OrderCreate";
+import { useSelector } from 'react-redux';
 
 export const CreateOrderPage = () => {
-  const [currentOrders, setcurrentOrders] = useState(orders);
+
+  const orders = useSelector(state => state.orders.orders);
+  const products = useSelector(state => state.orders.products);
 
   return (
     <>
       <h1 className="m-3"> Create new Order </h1>
       <CreateOrder 
-        currentOrders={currentOrders}
-        setCurrentOrders={setcurrentOrders}
+        currentOrders={orders}
         currentProducts={products}
       />
     </>

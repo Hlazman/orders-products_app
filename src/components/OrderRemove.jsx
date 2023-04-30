@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useDispatch } from 'react-redux';
+import { deleteOrder } from '../features/ordersSlice';
 
-const OrderRemove = ({ order, currentOrders, setCurrentOrders }) => {
+const OrderRemove = ({ order }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const dispatch = useDispatch();
 
   const handleDeleteOrder = () => {
     if (selectedOrder) {
-      const newOrders = currentOrders.filter((order) => order.id !== selectedOrder.id);
-      setCurrentOrders(newOrders)
+      dispatch(deleteOrder(selectedOrder.id));
     }
     setIsModalOpen(false);
   };
