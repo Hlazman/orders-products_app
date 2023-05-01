@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const sequelize = new Sequelize('mydb', 'root', 'password', {
-  host: 'localhost',
+  host: 'mysql',
   dialect: 'mysql',
 });
 

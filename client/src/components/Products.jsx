@@ -20,6 +20,7 @@ const Products = ({ orders, products }) => {
         <Col md={3}>
           <Form.Select id="type-select" value={selectedType} onChange={handleTypeChange}>
             <option value="All">All</option>
+            <option value="Electronics">Electronics</option>
             <option value="Monitors">Monitors</option>
             <option value="laptops">laptops</option>
             <option value="Keyboards">Keyboards</option>
@@ -42,7 +43,7 @@ const Products = ({ orders, products }) => {
           </tr>
         </thead>
         <tbody>
-          {filteredProducts.map(product => (
+          {orders && orders.length > 0 && filteredProducts.map(product => (
             <tr key={product.id}>
               <td>{product.title}</td>
               <td>{product.type}</td>
@@ -50,7 +51,7 @@ const Products = ({ orders, products }) => {
               <td>{product.guarantee.end}</td>
               <td>{product.price.find(p => p.symbol === 'USD').value}</td>
               <td>{product.price.find(p => p.symbol === 'UAH').value}</td>
-              <td>{orders.find(order => order.id === product.order).title}</td>
+              <td>{orders.find(order => order.id === product.order)?.title}</td>
             </tr>
           ))}
         </tbody>
