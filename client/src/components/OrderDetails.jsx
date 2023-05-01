@@ -33,6 +33,10 @@ const OrderDetails = ({ order, products }) => {
                     </Card.Text>
                   </Card.Body>
                   <ListGroup className="list-group-flush">
+                  <ListGroupItem> 
+                      <span className='fw-bold'>Type: </span> 
+                      {product.type}
+                    </ListGroupItem>
                     <ListGroupItem> 
                       <span className='fw-bold'>Guarantee start: </span> 
                       {product.guarantee.start}
