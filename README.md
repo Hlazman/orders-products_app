@@ -29,15 +29,9 @@ The project also includes configuration files for Docker Compose, making it easy
 ## Instalation
 1. Clone the repository to your local machine using git clone https://github.com/Hlazman/orders-products_app.git.
 2. Run docker on local machine
-3. Run in terminal ```jsx harmony
-    docker-compose up --build
-    ```
-    To stop ```jsx harmony
-      docker-compose down
-    ```
-    To run again ```jsx harmony
-      docker-compose up
-    ```
+3. Run in terminal ```docker-compose up --build```
+    To stop ```docker-compose down```
+    To run again ```docker-compose up```
 
 ## CLIENT
 
