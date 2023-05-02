@@ -153,17 +153,6 @@ The component imports the Orders component and uses useSelector from react-redux
 #### NotFoundPage
 This is a React functional component that returns a message "Page not found" when the route is not recognized.
 
-### server
-#### server.js
-Here creates a socket.io server listening. It allows for real-time communication between the server and connected clients.
-
-The server starts by requiring the socket.io module and creating an instance of it that listens on port. The 'cors' option is set to allow requests from any origin, with specific HTTP methods and headers enabled.
-
-The server then initializes a variable activeSessions to keep track of the number of connected clients.
-
-When a client connects to the server, the connect event is emitted, and a callback function logs a message to the console and increments the activeSessions variable. The server emits the activeSessions event to all connected clients, passing the new value of activeSessions.
-
-When a client disconnects from the server, the disconnect event is emitted, and a callback function logs a message to the console and decrements the activeSessions variable. 
 
 ### APP.js
 Here renders different pages based on the URL path using the React Router library. It also fetches data from an API endpoint using the fetch method, and stores the data using Redux.
@@ -199,6 +188,16 @@ The next part sets up the PUT requests that will update existing data in the dat
 - `app.delete('/api/orders/:id', ...)` - deletes an existing order by ID and returns the deleted order
 - `app.delete('/api/products/:id', ...)` - deletes an existing product by ID and returns the deleted product
 
+##### socket:
+Here creates a socket.io server listening. It allows for real-time communication between the server and connected clients.
+
+The server starts by requiring the socket.io module and creating an instance of it that listens on port. The 'cors' option is set to allow requests from any origin, with specific HTTP methods and headers enabled.
+
+The server then initializes a variable activeSessions to keep track of the number of connected clients.
+
+When a client connects to the server, the connect event is emitted, and a callback function logs a message to the console and increments the activeSessions variable. The server emits the activeSessions event to all connected clients, passing the new value of activeSessions.
+
+When a client disconnects from the server, the disconnect event is emitted, and a callback function logs a message to the console and decrements the activeSessions variable.
 
 #### Dockerfile
 for building a Docker image for a Node.js application.

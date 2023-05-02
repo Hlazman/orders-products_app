@@ -11,11 +11,11 @@ import store from './features/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
+    {/* <React.StrictMode> */}
       <Router>
         <App />
       </Router>
-    </React.StrictMode>
+    {/* </React.StrictMode> */}
   </Provider>
 );
 

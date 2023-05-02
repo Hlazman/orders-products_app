@@ -2,36 +2,37 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const NavigationMenu = () => {
-  const [showMenu, setShowMenu] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
+  const handleToggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light align-items-baseline" style={{ height: showMenu ? 'auto' : '100vh' }}>
-
+    <nav className={`navbar ${isMenuOpen ? 'navbar-expand-md' : 'navbar-expand-lg'} navbar-light bg-light ${isMenuOpen ? '' : 'min-vh-100'} align-items-baseline`}>
       <button
         className="navbar-toggler"
         type="button"
-        onClick={toggleMenu}
+        onClick={handleToggleMenu}
+        aria-expanded={isMenuOpen}
+        aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className={`collapse navbar-collapse m-3 ${showMenu ? 'show' : ''}`} id="navbarNav">
+      <div className={`collapse navbar-collapse m-3 ${isMenuOpen ? 'show' : ''}`} id="navbarNav">
         <ul className="navbar-nav flex-column">
           <li className="nav-item">
-            <NavLink to="/orders" className="nav-link" onClick={toggleMenu}>
+            <NavLink to="/orders" className="nav-link">
               Orders
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/products" className="nav-link" onClick={toggleMenu}>
+            <NavLink to="/products" className="nav-link">
               Products
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/create" className="nav-link" onClick={toggleMenu}>
+            <NavLink to="/create" className="nav-link">
               Create order
             </NavLink>
           </li>
@@ -42,7 +43,3 @@ const NavigationMenu = () => {
 };
 
 export default NavigationMenu;
-
-
-
-
